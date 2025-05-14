@@ -1,0 +1,79 @@
+from datetime import datetime
+
+# Classe principal do banco
+class Banco:
+    def __init__(self):
+        self.saldo = 0.0
+        self.extrato = []
+        self.limite_saque = 500.0
+        self.limite_saques_diarios = 3
+        self.saques_realizados = 0
+
+    def depositar(self, valor):
+        if valor > 0:
+            self.saldo += valor
+            self.extrato.append(f"{datetime.now().strftime('%d/%m/%Y %H:%M:%S')} - Depósito: R$ {valor:.2f}")
+            print(f"✅ Depósito de R$ {valor:.2f} realizado com sucesso.")
+        else:
+            print("❌ Valor de depósito inválido. Tente novamente.")
+
+    def sacar(self, valor):
+        if self.saques_realizados >= self.limite_saques_diarios:
+            print("❌ Limite diário de saques atingido.")
+        elif valor > self.limite_saque:
+            print(f"❌ Valor do saque excede o limite de R$ {self.limite_saque:.2f} por operação.")
+        elif valor > self.saldo:
+            print("❌ Saldo insuficiente para realizar o saque.")
+        elif valor > 0:
+            self.saldo -= valor
+            self.saques_realizados += 1
+            self.extrato.append(f"{datetime.now().strftime('%d/%m/%Y %H:%M:%S')} - Saque: R$ {valor:.2f}")
+            print(f"✅ Saque de R$ {valor:.2f} realizado com sucesso.")
+        else:
+            print("❌ Valor de saque inválido. Tente novamente.")
+
+    def exibir_extrato(self):
+        print("\n========== EXTRATO ==========")
+        if not self.extrato:
+            print("⚠️  Não foram realizadas movimentações.")
+        else:
+            for operacao in self.extrato:
+                print(operacao)
+        print(f"\n💰 Saldo atual: R$ {self.saldo:.2f}")
+        print("=============================\n")
+
+# Função do menu
+def menu():
+    print("\n📋 Bem-vindo ao Sistema Bancário DIO")
+    print("[1] Depositar")
+    print("[2] Sacar")
+    print("[3] Ver Extrato")
+    print("[0] Sair")
+
+# Instancia o banco
+banco = Banco()
+
+# Loop principal
+while True:
+    menu()
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == "1":
+        try:
+            valor = float(input("Informe o valor do depósito: R$ "))
+            banco.depositar(valor)
+        except ValueError:
+            print("❌ Entrada inválida. Por favor, digite um número.")
+    elif opcao == "2":
+        try:
+            valor = float(input("Informe o valor do saque: R$ "))
+            banco.sacar(valor)
+        except ValueError:
+            print("❌ Entrada inválida. Por favor, digite um número.")
+    elif opcao == "3":
+        banco.exibir_extrato()
+    elif opcao == "0":
+        print("👋 Obrigado por utilizar o Sistema Bancário DIO. Até mais!")
+        break
+    else:
+        print("❌ Opção inválida. Tente novamente.")
