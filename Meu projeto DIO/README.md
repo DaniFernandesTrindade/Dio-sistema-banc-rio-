@@ -2,7 +2,7 @@
 
 ## Sobre o projeto
 
-Olá! 👋 Eu sou a Daniella e esta é a versão **refatorada e otimizada** do meu sistema bancário em Python!
+Olá! 👋 Esta é a versão **refatorada e otimizada** do meu sistema bancário em Python!
 
 Depois da versão inicial, nesse projeto apliquei boas práticas de programação, como o uso de funções, para melhorar a estrutura, a legibilidade e a manutenção do código. O resultado é um sistema mais limpo, eficiente e pronto para evoluções futuras!
 
